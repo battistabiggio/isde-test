@@ -9,16 +9,26 @@ class CDataPerturb(ABC):
     def data_perturbation(self, x):
         """
 
-        :param x: a flat vector containing n_features elements
-        :return:
+        Parameters
+        ----------
+        x: flattened vector to be perturbed
+
+        Returns
+        -------
+        xp: the perturbed version of x
         """
         raise NotImplementedError("data_perturbation not implemented!")
 
     def perturb_dataset(self, x):
         """
 
-        :param x: a matrix of shape=(n_samples, n_features)
-        :return:
+        Parameters
+        ----------
+        x: matrix ...
+
+        Returns
+        -------
+        xp: ...
         """
         xp = np.zeros(shape=x.shape)
         for i in range(xp.shape[0]):
