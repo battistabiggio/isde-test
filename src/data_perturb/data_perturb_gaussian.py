@@ -2,32 +2,32 @@ from data_perturb import CDataPerturb
 import numpy as np
 
 
-class CDataPerturbRandom(CDataPerturb):
+class CDataPerturbGaussian(CDataPerturb):
 
-    def __init__(self, K=100, min_value=0, max_value=255):
-        self.K = K
+    def __init__(self, sigma=0, min_value=0, max_value=255):
+        self.sigma = sigma
         self.min_value = min_value
         self.max_value = max_value
 
     @property
-    def K(self):
-        return self._K
+    def sigma(self):
+        return self._sigma
+
+    @sigma.setter
+    def sigma(self, value):
+        self._sigma = float(value)
 
     @property
     def min_value(self):
         return self._min_value
 
-    @property
-    def max_value(self):
-        return self._max_value
-
-    @K.setter
-    def K(self, value):
-        self._K = int(value)
-
     @min_value.setter
     def min_value(self, value):
         self._min_value = int(value)
+
+    @property
+    def max_value(self):
+        return self._max_value
 
     @max_value.setter
     def max_value(self, value):
@@ -38,13 +38,9 @@ class CDataPerturbRandom(CDataPerturb):
             raise TypeError("x is not flattened!")
 
         xp = x.copy().ravel()
+        xp = xp + self.sigma * np.random.randn(xp.size)
+        # now we need to bound the values xp in [0, 255]
+        xp[xp < self.min_value] = self.min_value
+        xp[xp > self.max_value] = self.max_value
 
-        idx = np.array(range(0, x.size))
-        np.random.shuffle(idx)
-        idx = idx[:self.K]
-
-        pixel_values = np.random.randint(
-            self.min_value, self.max_value, self.K)
-
-        xp[idx] = pixel_values
         return xp
