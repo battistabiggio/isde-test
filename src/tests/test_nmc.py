@@ -19,7 +19,8 @@ class TestNMC(unittest.TestCase):
         self.assertTrue(self.clf.centroids is None)
 
     def test_robust_estimation(self):
-        # self.clf.robust_estimation =  'sdjklnsdlkn'  #check if raises exception
+        # check if raises exception
+        # self.clf.robust_estimation =  'sdjklnsdlkn'
         self.assertRaises(
             TypeError, setattr, self.clf, 'robust_estimation', 'sdjklnsdlkn')
 
