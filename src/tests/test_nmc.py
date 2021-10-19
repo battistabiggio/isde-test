@@ -1,5 +1,5 @@
 import unittest
-from nmc import NMC
+from data_perturb import CDataPerturbUniform
 
 import numpy as np
 
