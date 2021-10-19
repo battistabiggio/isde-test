@@ -11,6 +11,28 @@ from data_perturb import CDataPerturbUniform, CDataPerturbGaussian
 
 
 def robustness_test(clf, data_pert, param_name, param_values):
+    """
+    Running a robustness test on clf using the data_pert perturbation model.
+    The test is run by setting param_name to different values (param_values).
+
+    Parameters
+    ----------
+
+    clf :
+        an object implementing fit and predict functions (sklearn interface)
+
+    data_pert : ...
+
+    param_name : ...
+
+    param_values : ...
+
+    Returns
+    -------
+    test_accuracies :
+                      Accuracy values ...
+
+    """
     test_accuracies = np.zeros(shape=param_values.shape)
     for i, k in enumerate(param_values):
         setattr(data_pert, param_name, k)  # data_pert.sigma = k
@@ -41,7 +63,7 @@ print("Number of total samples: ", x.shape[0],
 
 x_tr, y_tr, x_ts, y_ts = split_data(x, y, n_tr=n_tr)
 
-param_values = np.array([0, 10, 20, 50, 100, 200, 300, 400, 500])
+param_values = np.array([0, 10, 20, 100, 200, 300, 400])
 
 clf_list = [NMC(), SVC(kernel='linear')]
 clf_names = ['NMC', 'SVM']
